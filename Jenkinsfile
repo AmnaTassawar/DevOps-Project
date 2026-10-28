@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = '55420/devops-app'
+        DOCKER_IMAGE_BACKEND = '55420/devops-backend'
         CREDENTIALS_ID = 'docker-hub-cred'
     }
 
@@ -16,8 +16,8 @@ pipeline {
         
         stage('Stage 2: Build Docker image') {
             steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${DOCKER_IMAGE}:latest ."
+                echo 'Building Docker image for Backend...'
+                sh "docker build -t ${DOCKER_IMAGE_BACKEND}:latest ./backend"
             }
         }
         
@@ -26,7 +26,7 @@ pipeline {
                 echo 'Pushing Docker image to Docker Hub...'
                 withCredentials([usernamePassword(credentialsId: "${CREDENTIALS_ID}", usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh "echo '$DOCKER_PASS' | docker login -u '$DOCKER_USER' --password-stdin"
-                    sh "docker push ${DOCKER_IMAGE}:latest"
+                    sh "docker push ${DOCKER_IMAGE_BACKEND}:latest"
                 }
             }
         }
