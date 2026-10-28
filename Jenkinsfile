@@ -2,8 +2,8 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE_BACKEND = '55420/devops-backend'
-        CREDENTIALS_ID = 'docker-hub-cred'
+  DOCKER_IMAGE_BACKEND = '55420/devops-backend'
+        CREDENTIALS_ID = 'docker-cred-55420'
     }
 
     stages {
